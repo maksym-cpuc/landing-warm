@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Тёплый вариант лендинга</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,600&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+/* Layout: спокойная колонка с крупными мягкими блоками; на ПК заголовок раздела слева, текст справа */
+:root{
+  --bg:#F1F4EC; --surface:#FFFFFF; --tint:#E3EADA; --ink:#1E2B22; --muted:#56645A;
+  --accent:#2F5D46; --accent-ink:#FFFFFF; --honey:#B87A12; --line:#D3DCC9;
+  --display:"Literata",Georgia,"Times New Roman",serif;
+  --body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131915; --surface:#1B231E; --tint:#232E27; --ink:#E6ECE2; --muted:#A2AFA4;
+  --accent:#8CC3A3; --accent-ink:#0F1A13; --honey:#E2AC4C; --line:#2D3932; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131915; --surface:#1B231E; --tint:#232E27; --ink:#E6ECE2; --muted:#A2AFA4;
+  --accent:#8CC3A3; --accent-ink:#0F1A13; --honey:#E2AC4C; --line:#2D3932; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.15;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:6px}
+
+.draft{background:var(--tint);color:var(--muted);font-size:13px;text-align:center;padding:8px 16px}
+.draft b{color:var(--ink);font-weight:600}
+
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:20px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600}
+.logo i{width:34px;height:34px;border-radius:50% 50% 50% 12%;background:var(--accent);display:block}
+.top a.tg{font-size:15px;text-decoration:none;border:1px solid var(--line);padding:8px 14px;border-radius:999px;background:var(--surface)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font:600 17px/1 var(--body);padding:18px 26px;border-radius:999px;border:0;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover{transform:none}}
+
+.hero{display:grid;gap:28px;padding-block:28px 56px}
+.eyebrow{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-size:clamp(34px,6vw,60px);margin-top:12px}
+.hero .lead{font-size:clamp(17px,2vw,20px);color:var(--muted);margin-top:20px;max-width:58ch}
+.hero .actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:28px}
+.offer{background:var(--surface);border-radius:28px;padding:28px;display:grid;gap:14px;align-self:start;border:1px solid var(--line)}
+.offer .big{font-family:var(--display);font-size:28px;line-height:1.2}
+.offer .big em{font-style:normal;color:var(--honey)}
+.offer ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;color:var(--muted)}
+.offer li{display:flex;gap:10px}
+.offer li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:.62em}
+@media (min-width:900px){.hero{grid-template-columns:1.35fr .9fr;align-items:center;padding-block:48px 80px}}
+
+section.block{border-top:1px solid var(--line);padding-block:56px;display:grid;gap:20px}
+section.block h2{font-size:clamp(26px,3.6vw,38px)}
+section.block .body{display:grid;gap:16px;max-width:64ch;min-width:0}
+section.block .body p{color:var(--ink)}
+section.block .body .soft{color:var(--muted)}
+@media (min-width:900px){section.block{grid-template-columns:.9fr 1.3fr;gap:56px;padding-block:72px}}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{background:var(--tint);padding:8px 14px;border-radius:999px;font-size:15px}
+.quote{font-family:var(--display);font-size:22px;line-height:1.35;border-left:3px solid var(--honey);padding-left:18px}
+
+.situations{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.situations li{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+
+.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--surface);border-radius:22px;padding:22px;display:grid;gap:6px;border:1px solid var(--line)}
+.card h3{font-size:20px}
+.card p{color:var(--muted);font-size:15px}
+
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.stat{background:var(--tint);border-radius:20px;padding:20px}
+.stat b{display:block;font-family:var(--display);font-size:34px;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:14px}
+.ph{font-size:12px;color:var(--honey);letter-spacing:.04em;text-transform:uppercase}
+
+.reviews{padding-block:64px;border-top:1px solid var(--line)}
+.reviews h2{font-size:clamp(26px,3.6vw,38px);margin-bottom:24px}
+.rev-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.rev{background:var(--surface);border-radius:24px;padding:24px;display:grid;gap:14px;align-content:start;border:1px solid var(--line)}
+.rev p{font-size:16px}
+.rev footer{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
+.rev .ava{width:40px;height:40px;border-radius:50%;background:var(--tint);display:grid;place-items:center;font-weight:600;color:var(--accent)}
+
+.final{background:var(--accent);color:var(--accent-ink);border-radius:36px;padding:36px 24px;display:grid;gap:32px;margin-block:24px 48px}
+.final h2{font-size:clamp(30px,4.5vw,48px)}
+.final .txt{display:grid;gap:14px;max-width:52ch;min-width:0}
+.final .txt p{opacity:.9}
+@media (min-width:900px){.final{grid-template-columns:1fr 1fr;padding:56px;align-items:start}}
+
+form.lead{background:var(--surface);color:var(--ink);border-radius:26px;padding:24px;display:grid;gap:14px;min-width:0}
+form.lead label{display:grid;gap:6px;font-size:14px;color:var(--muted)}
+form.lead input[type=tel],form.lead input[type=text]{font:inherit;font-size:17px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px;width:100%}
+form.lead .check{display:flex;gap:10px;align-items:flex-start;font-size:13px}
+form.lead .check input{margin-top:3px;accent-color:var(--accent)}
+form.lead .btn{width:100%}
+.form-error{color:#B3261E;font-size:14px}
+:root[data-theme="dark"] .form-error{color:#F2A49C}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .form-error{color:#F2A49C}}
+.ok{background:var(--surface);color:var(--ink);border-radius:26px;padding:28px;display:grid;gap:8px}
+.ok b{font-family:var(--display);font-size:24px}
+.ok small{color:var(--muted)}
+.contact-line{font-size:15px;opacity:.9}
+
+footer.site{padding-block:32px 48px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+
+<div class="draft"><b>Черновик · вариант 1 из 3 «Тёплый».</b> Название, цифры, контакты и отзывы пока заглушки.</div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><i aria-hidden="true"></i>Название НКО</div>
+    <a class="tg" href="#contact">Написать нам</a>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Призыв · воинский учёт · служба</div>
+      <h1>Сначала разбираемся в ситуации. Потом действуем.</h1>
+      <p class="lead">Когда вопрос касается здоровья, службы и дальнейшей жизни, полагаться на случай или годами бороться с системой — не всегда разумный путь. Наша задача — не вступать в конфликт с государственными органами, а найти законный и наиболее эффективный способ решения конкретной ситуации.</p>
+      <div class="actions">
+        <a class="btn" href="#contact">Получить бесплатную консультацию</a>
+      </div>
+    </div>
+    <aside class="offer">
+      <div class="big">Первая консультация — <em>бесплатно</em></div>
+      <ul>
+        <li>Разберём вашу ситуацию и документы</li>
+        <li>Честно скажем, можем ли помочь</li>
+        <li>Стоимость обсуждаем только после разбора</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="block">
+    <h2>Почему не всегда стоит начинать с юристов</h2>
+    <div class="body">
+      <p>Сегодня существует множество специалистов, предлагающих помощь в вопросах призыва и воинского учёта. Но наличие юриста и правильно оформленных документов само по себе не гарантирует нужного результата.</p>
+      <p class="soft">Иногда длительные обжалования и попытки решить всё исключительно через формальные процедуры только усложняют ситуацию.</p>
+      <p class="quote">Не спорить ради спора, а искать практическое решение в рамках доступных законных механизмов.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Кто мы</h2>
+    <div class="body">
+      <p>Мы не классическая юридическая компания и не предлагаем универсальные схемы для всех. Мы занимаемся практическим сопровождением сложных ситуаций, связанных с воинским учётом, призывом и службой.</p>
+      <div class="chips"><span>Категория годности</span><span>Бронирование</span><span>АГС</span><span>Воинский учёт</span><span>Другие вопросы</span></div>
+      <p class="soft">Не обещаем невозможного и не гарантируем результат там, где он зависит от решений государственных органов. Сначала изучаем ситуацию, документы и реальные возможности, после этого предлагаем варианты действий.</p>
+      <p>Наша цель — решить вопрос максимально спокойно, эффективно и с минимальными рисками для вас.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Если решение военкомата не соответствует вашей ситуации</h2>
+    <div class="body">
+      <p>Даже при наличии подтверждённого заболевания и правильно оформленных документов решение военкомата может оказаться не таким, как вы ожидаете. На практике бывает так:</p>
+      <ul class="situations">
+        <li>не устанавливают необходимую категорию годности</li>
+        <li>не снимают с воинского учёта</li>
+        <li>требуют подписать документы, с которыми человек не согласен</li>
+      </ul>
+      <p class="soft">Порядок решения таких вопросов сильно зависит от конкретной ситуации. Самостоятельное обжалование не всегда приводит к желаемому результату и нередко только усложняет дальнейшее решение. Поэтому важно оценить ситуацию и возможные риски до того, как проблема возникнет.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Категория «В» — не всегда окончательное решение</h2>
+    <div class="body">
+      <p>Категория «В» освобождает от призыва в мирное время, но не означает, что вопросы воинского учёта полностью закрыты.</p>
+      <p class="soft">Законодательство и порядок мобилизационных мероприятий могут меняться. Поэтому важно понимать не только свою категорию сегодня, но и возможные последствия в дальнейшем.</p>
+      <p>Мы помогаем оценить текущий статус, документы и возможные риски, чтобы вы понимали дальнейший порядок действий.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Помогаем в разных ситуациях</h2>
+    <div class="body">
+      <div class="cards">
+        <div class="card"><h3>Повестки</h3><p>Что делать, если пришла повестка, и какие у вас варианты.</p></div>
+        <div class="card"><h3>Призыв и учёт</h3><p>Категория годности, постановка и снятие с учёта.</p></div>
+        <div class="card"><h3>Мобилизация</h3><p>Мобилизационные вопросы, бронирование, отсрочки.</p></div>
+        <div class="card"><h3>Во время службы</h3><p>Проблемы, которые возникают у военнослужащих.</p></div>
+      </div>
+      <p class="soft">Работаем как с призывниками, так и с военнослужащими. Каждый случай рассматриваем индивидуально: сначала изучаем обстоятельства и документы, потом говорим, можем ли помочь и какой вариант действий возможен.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Опыт и реальные результаты</h2>
+    <div class="body">
+      <div class="stats">
+        <div class="stat"><b>XXX</b><span>обращений разобрали</span></div>
+        <div class="stat"><b>X лет</b><span>работаем</span></div>
+        <div class="stat"><b>XX</b><span>регионов</span></div>
+      </div>
+      <div class="ph">Цифры — заглушки, заменить на реальные</div>
+      <p>Мы помогли людям в самых разных ситуациях, связанных с призывом, воинским учётом и прохождением службы. Среди наших клиентов — призывники, военнослужащие и родители, которые обращались по вопросам своих детей.</p>
+      <p class="soft">Мы не обещаем одинаковый результат в каждом случае: итог зависит от обстоятельств, документов и действующего законодательства. Поэтому сначала разбираемся в ситуации и только потом определяем возможные пути решения.</p>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <h2>Отзывы</h2>
+    <div class="rev-grid">
+      <article class="rev"><div class="ph">Пример отзыва — заменить на реальный</div><p>Сын получил повестку, мы не понимали, что делать. На первой консультации всё спокойно разложили по шагам, дальше вели до конца.</p><footer><span class="ava">А</span>Анна, мама призывника</footer></article>
+      <article class="rev"><div class="ph">Пример отзыва — заменить на реальный</div><p>Категорию годности не устанавливали, хотя документы были. Ребята разобрались, что не так, и подсказали, как действовать.</p><footer><span class="ava">Д</span>Дмитрий, 24 года</footer></article>
+      <article class="rev"><div class="ph">Пример отзыва — заменить на реальный</div><p>Обратился уже во время службы. Честно сказали, какие есть варианты, а какие нет. Без лишних обещаний.</p><footer><span class="ava">С</span>Сергей, военнослужащий</footer></article>
+    </div>
+  </section>
+
+  <section class="final" id="contact">
+    <div class="txt">
+      <h2>Чем раньше — тем проще</h2>
+      <p>Проблему, которую удалось выявить на начальном этапе, как правило, проще и быстрее решить, чем ситуацию, последствия которой уже приходится исправлять.</p>
+      <p>Прежде чем предпринимать самостоятельные действия, получите бесплатную консультацию и оцените возможные варианты.</p>
+      <p class="contact-line">Telegram: <a href="https://t.me/">@nko_placeholder</a><br>Телефон: +7 (XXX) XXX-XX-XX</p>
+    </div>
+    <div>
+      <form class="lead" data-lead novalidate>
+        <label for="v1-phone">Телефон<input id="v1-phone" name="phone" type="tel" placeholder="+7 900 000-00-00" autocomplete="tel"></label>
+        <label for="v1-tg">Ник в Telegram<input id="v1-tg" name="tg" type="text" placeholder="@username"></label>
+        <label class="check" for="v1-consent"><input id="v1-consent" name="consent" type="checkbox">Согласен на обработку персональных данных</label>
+        <p class="form-error" hidden></p>
+        <button class="btn" type="submit">Жду звонка</button>
+      </form>
+      <div class="ok" hidden><b>Спасибо! Мы свяжемся с вами.</b><small>Это прототип: данные никуда не отправляются.</small></div>
+    </div>
+  </section>
+
+  <footer class="site">
+    <span>© Название НКО, 2026</span>
+    <span>Telegram @nko_placeholder · +7 (XXX) XXX-XX-XX</span>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll('form[data-lead]').forEach(function(f){
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var p=f.querySelector('[name=phone]').value.trim(),t=f.querySelector('[name=tg]').value.trim(),err=f.querySelector('.form-error');
+    if(!p&&!t){err.textContent='Укажите телефон или ник в Telegram, хотя бы что-то одно.';err.hidden=false;return}
+    if(!f.querySelector('[name=consent]').checked){err.textContent='Отметьте согласие на обработку данных.';err.hidden=false;return}
+    err.hidden=true;f.hidden=true;f.nextElementSibling.hidden=false;
+  });
+});
+</script>
+
+</body>
+</html>
