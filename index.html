@@ -111,9 +111,33 @@ form.lead .btn{width:100%}
 .contact-line{font-size:15px;opacity:.9}
 
 footer.site{padding-block:32px 48px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;border-top:1px solid var(--line)}
+
+/* ---- Вау-слой: анимации ---- */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;background:var(--honey);transform-origin:0 50%;transform:scaleX(0);z-index:50}
+.hero{position:relative;isolation:isolate}
+.blobs{position:absolute;inset:-40px -20px auto;height:120%;z-index:-1;pointer-events:none;overflow:hidden;filter:blur(48px);opacity:.55}
+.blobs i{position:absolute;border-radius:50%;display:block}
+.blobs i:nth-child(1){width:420px;height:420px;background:var(--tint);left:-80px;top:10%;animation:drift1 18s ease-in-out infinite alternate}
+.blobs i:nth-child(2){width:340px;height:340px;background:color-mix(in srgb,var(--honey) 35%,transparent);right:5%;top:0;animation:drift2 22s ease-in-out infinite alternate}
+.blobs i:nth-child(3){width:300px;height:300px;background:color-mix(in srgb,var(--accent) 30%,transparent);left:40%;bottom:0;animation:drift3 26s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(120px,60px) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-140px,90px) scale(.9)}}
+@keyframes drift3{to{transform:translate(90px,-80px) scale(1.2)}}
+.hero h1 .w{display:inline-block;will-change:transform}
+.offer{transform-style:preserve-3d;will-change:transform;box-shadow:0 20px 50px -30px color-mix(in srgb,var(--accent) 60%,transparent)}
+.offer .big em{background:linear-gradient(90deg,var(--honey),var(--accent),var(--honey));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.final{position:relative;overflow:hidden;isolation:isolate}
+.final::before{content:"";position:absolute;inset:-50%;z-index:-1;background:conic-gradient(from 0deg,transparent 0 70%,color-mix(in srgb,var(--honey) 35%,transparent) 80%,transparent 90%);animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.btn{position:relative;overflow:hidden}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);animation:sweep 4.5s ease-in-out infinite}
+@keyframes sweep{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+@media (prefers-reduced-motion:reduce){.blobs i,.offer .big em,.final::before,.btn::after{animation:none}}
 </style>
 </head>
 <body>
+<div class="progress" aria-hidden="true"></div>
 
 
 <div class="draft"><b>Черновик · вариант 1 из 3 «Тёплый».</b> Название, цифры, контакты и отзывы пока заглушки.</div>
@@ -125,6 +149,7 @@ footer.site{padding-block:32px 48px;color:var(--muted);font-size:14px;display:fl
   </header>
 
   <section class="hero">
+    <div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
     <div>
       <div class="eyebrow">Призыв · воинский учёт · служба</div>
       <h1>Сначала разбираемся в ситуации. Потом действуем.</h1>
@@ -257,5 +282,69 @@ document.querySelectorAll('form[data-lead]').forEach(function(f){
 });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/motion@11.18.2/dist/motion.js"></script>
+<script>
+(function(){
+  var M=window.Motion;
+  if(!M||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var animate=M.animate,stagger=M.stagger,inView=M.inView,scroll=M.scroll;
+  var ease=[0.22,1,0.36,1];
+
+  // полоса прогресса чтения
+  scroll(animate('.progress',{scaleX:[0,1]},{ease:'linear'}));
+
+  // заголовок: слова выплывают по одному
+  var h1=document.querySelector('.hero h1');
+  h1.innerHTML=h1.textContent.trim().split(/\s+/).map(function(w){return '<span class="w">'+w+'</span>'}).join(' ');
+  animate('.hero h1 .w',{opacity:[0,1],y:[40,0],filter:['blur(8px)','blur(0px)']},{delay:stagger(0.07),duration:0.8,ease:ease});
+  animate('.hero .eyebrow, .hero .lead, .hero .actions',{opacity:[0,1],y:[20,0]},{delay:stagger(0.12,{startDelay:0.45}),duration:0.7,ease:ease});
+  animate('.offer',{opacity:[0,1],scale:[0.9,1],rotate:[-3,0]},{delay:0.6,type:'spring',bounce:0.35,duration:1});
+
+  // карточка оффера: наклон за курсором (на ПК)
+  var offer=document.querySelector('.offer');
+  if(matchMedia('(hover: hover)').matches){
+    offer.addEventListener('pointermove',function(e){
+      var r=offer.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      animate(offer,{rotateY:x*10,rotateX:-y*10,transformPerspective:800},{duration:0.3});
+    });
+    offer.addEventListener('pointerleave',function(){animate(offer,{rotateY:0,rotateX:0},{type:'spring',bounce:0.4})});
+  }
+
+  // разделы появляются при прокрутке
+  function reveal(sel,kids){
+    document.querySelectorAll(sel).forEach(function(el){
+      var items=kids?el.querySelectorAll(kids):[el];
+      animate(items,{opacity:0,y:30},{duration:0});
+      inView(el,function(){animate(items,{opacity:1,y:0},{delay:stagger(0.08),duration:0.7,ease:ease})},{amount:0.2});
+    });
+  }
+  reveal('section.block','h2, .body > *');
+  reveal('.cards','.card');
+  reveal('.situations','li');
+  reveal('.stats','.stat');
+  reveal('.reviews','h2, .rev');
+  reveal('.final','.txt > *, form.lead');
+
+  // золотая линия у цитаты дорисовывается
+  document.querySelectorAll('.quote').forEach(function(q){
+    q.style.borderLeftColor='transparent';
+    q.style.backgroundImage='linear-gradient(var(--honey),var(--honey))';
+    q.style.backgroundRepeat='no-repeat';q.style.backgroundSize='3px 0%';
+    inView(q,function(){animate(q,{backgroundSize:['3px 0%','3px 100%']},{duration:0.9,ease:ease,delay:0.3})});
+  });
+
+  // кнопки пружинят при нажатии
+  document.querySelectorAll('.btn').forEach(function(b){
+    b.addEventListener('pointerdown',function(){animate(b,{scale:0.94},{type:'spring',bounce:0.5,duration:0.3})});
+    ['pointerup','pointerleave'].forEach(function(ev){b.addEventListener(ev,function(){animate(b,{scale:1},{type:'spring',bounce:0.6,duration:0.5})})});
+  });
+
+  // успешная заявка: всплывает
+  new MutationObserver(function(){
+    var ok=document.querySelector('.ok:not([hidden])');
+    if(ok&&!ok.dataset.shown){ok.dataset.shown=1;animate(ok,{opacity:[0,1],scale:[0.8,1]},{type:'spring',bounce:0.45,duration:0.8})}
+  }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['hidden']});
+})();
+</script>
 </body>
 </html>
